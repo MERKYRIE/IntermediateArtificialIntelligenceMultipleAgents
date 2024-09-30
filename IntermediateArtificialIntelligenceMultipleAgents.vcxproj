@@ -24,6 +24,7 @@
     <ClInclude Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Keyboard.hpp" />
     <ClInclude Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Space.hpp" />
     <ClInclude Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Space\Entity.hpp" />
+    <ClInclude Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Space\Vector.hpp" />
     <ClInclude Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Time.hpp" />
     <ClInclude Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Video.hpp" />
     <ClInclude Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Video\Image.hpp" />
@@ -35,6 +36,7 @@
     <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Keyboard.cpp" />
     <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Space.cpp" />
     <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Space\Entity.cpp" />
+    <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Space\Vector.cpp" />
     <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Time.cpp" />
     <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Video.cpp" />
     <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Video\Image.cpp" />

@@ -6,17 +6,10 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NEntity
     {
         std::shared_ptr<NVideo::NSprite::SSprite> FSprite;
         double FTimer;
+        double FScale;
         double FDistance;
-        double FScaleX;
-        double FScaleY;
-        double FPositionXMinimum;
-        double FPositionXMaximum;
-        double FPositionX;
-        double FPositionYMinimum;
-        double FPositionYMaximum;
-        double FPositionY;
-        double FRotationX;
-        double FRotationY;
+        std::shared_ptr<NVector::SVector> FPosition;
+        std::shared_ptr<NVector::SVector> FDirection;
 
         SEntity();
         SEntity* IPreupdate();

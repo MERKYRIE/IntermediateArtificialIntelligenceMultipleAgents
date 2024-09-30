@@ -7,6 +7,11 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace
         struct SEntity;
     }
 
+    namespace NVector
+    {
+        struct SVector;
+    }
+
     inline struct SSpace
     {
         std::int64_t FNumber;

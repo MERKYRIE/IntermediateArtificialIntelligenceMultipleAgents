@@ -26,6 +26,9 @@
     <ClInclude Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Space\Entity.hpp">
       <Filter>IntermediateArtificialIntelligenceMultipleAgents\Space</Filter>
     </ClInclude>
+    <ClInclude Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Space\Vector.hpp">
+      <Filter>IntermediateArtificialIntelligenceMultipleAgents\Space</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents.cpp" />
@@ -51,6 +54,9 @@
       <Filter>IntermediateArtificialIntelligenceMultipleAgents\Video</Filter>
     </ClCompile>
     <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Space\Entity.cpp">
+      <Filter>IntermediateArtificialIntelligenceMultipleAgents\Space</Filter>
+    </ClCompile>
+    <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Space\Vector.cpp">
       <Filter>IntermediateArtificialIntelligenceMultipleAgents\Space</Filter>
     </ClCompile>
   </ItemGroup>

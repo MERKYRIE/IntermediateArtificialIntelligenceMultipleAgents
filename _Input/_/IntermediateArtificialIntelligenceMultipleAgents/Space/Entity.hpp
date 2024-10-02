@@ -7,7 +7,9 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NEntity
         std::shared_ptr<NVideo::NSprite::SSprite> FSprite;
         double FTimer;
         double FScale;
-        double FDistance;
+        double FSeparation;
+        double FAlignment;
+        double FCohesion;
         std::shared_ptr<NVector::SVector> FPosition;
         std::shared_ptr<NVector::SVector> FDirection;
 

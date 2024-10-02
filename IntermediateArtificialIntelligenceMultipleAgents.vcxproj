@@ -22,6 +22,7 @@
     <ClInclude Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents.hpp" />
     <ClInclude Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Debug.hpp" />
     <ClInclude Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Keyboard.hpp" />
+    <ClInclude Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Keyboard\Key.hpp" />
     <ClInclude Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Space.hpp" />
     <ClInclude Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Space\Entity.hpp" />
     <ClInclude Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Space\Vector.hpp" />
@@ -34,6 +35,7 @@
     <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents.cpp" />
     <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Debug.cpp" />
     <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Keyboard.cpp" />
+    <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Keyboard\Key.cpp" />
     <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Space.cpp" />
     <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Space\Entity.cpp" />
     <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Space\Vector.cpp" />

@@ -9,7 +9,7 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace
 {
     SSpace::SSpace()
     {
-        FNumber = 10;
+        FNumber = 1000;
         FArray.resize(FNumber);
         for(std::int64_t LEntity{0} ; LEntity < FNumber ; LEntity++)
         {

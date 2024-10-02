@@ -13,16 +13,17 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NVector
 
         SVector();
 
-        SVector* IReset();
-        SVector* IAssign(SVector* const& AVector);
-        std::shared_ptr<SVector> IAdd(SVector* const& AVector);
-        std::shared_ptr<SVector> ISubtract(SVector* const& AVector);
-        std::shared_ptr<SVector> IMultiply(SVector* const& AVector);
-        std::shared_ptr<SVector> IDivide(SVector* const& AVector);
-        double IMeasure();
-        SVector* INormalize();
-        SVector* IGenerate(double const& AMinimum , double const& AMaximum);
+        void IAssign(double const& AX , double const& AY);
+        void INormalize();
+        void IGenerate(bool const& ANormalization = false);
         bool IValidate();
+        bool IClamp(double const& AMinimum , double const& AMaximum);
+        double IMeasure();
+        double IMeasure(double const& AX , double const& AY);
+        std::shared_ptr<SVector> IAdd(double const& AX , double const& AY);
+        std::shared_ptr<SVector> ISubtract(double const& AX , double const& AY);
+        std::shared_ptr<SVector> IMultiply(double const& AX , double const& AY);
+        std::shared_ptr<SVector> IDivide(double const& AX , double const& AY);
 
         ~SVector();
     };

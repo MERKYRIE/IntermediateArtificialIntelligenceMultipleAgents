@@ -4,6 +4,8 @@
 
 #include"IntermediateArtificialIntelligenceMultipleAgents.hpp"
 
+#include"IntermediateArtificialIntelligenceMultipleAgents/Keyboard/Key.hpp"
+
 namespace NIntermediateArtificialIntelligenceMultipleAgents
 {
     SIntermediateArtificialIntelligenceMultipleAgents::SIntermediateArtificialIntelligenceMultipleAgents()
@@ -11,9 +13,9 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents
         NDebug::GDebug.ISimpleDirectMediaLayerCodeError(SDL_Init(SDL_INIT_EVERYTHING));
     }
 
-    void SIntermediateArtificialIntelligenceMultipleAgents::IPreupdate()
+    void SIntermediateArtificialIntelligenceMultipleAgents::IUupdate()
     {
-        while(!NKeyboard::GKeyboard.IIsKeyHeld(SDL_SCANCODE_ESCAPE))
+        while(NKeyboard::GKeyboard.FKeys["Escape"]->FState == "Down")
         {
             NDebug::GDebug.IPreupdate();
             NKeyboard::GKeyboard.IPreupdate();
@@ -48,6 +50,6 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents
 
 std::int32_t main(std::int32_t , char**)
 {
-    NIntermediateArtificialIntelligenceMultipleAgents::GIntermediateArtificialIntelligenceMultipleAgents.IPreupdate();
+    NIntermediateArtificialIntelligenceMultipleAgents::GIntermediateArtificialIntelligenceMultipleAgents.IUupdate();
     return(0);
 }

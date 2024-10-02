@@ -26,7 +26,7 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents
     inline struct SIntermediateArtificialIntelligenceMultipleAgents
     {
         SIntermediateArtificialIntelligenceMultipleAgents();
-        void IPreupdate();
+        void IUupdate();
         ~SIntermediateArtificialIntelligenceMultipleAgents();
     }
     GIntermediateArtificialIntelligenceMultipleAgents;

@@ -6,7 +6,7 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NVideo
 {
     SVideo::SVideo()
     {
-        NDebug::GDebug.ISimpleDirectMediaLayerHandleError(FWindow = SDL_CreateWindow("Hope" , 0 , 0 , 0 , 0 , SDL_WINDOW_FULLSCREEN_DESKTOP));
+        NDebug::GDebug.ISimpleDirectMediaLayerHandleError(FWindow = SDL_CreateWindow("IntermediateArtificialIntelligenceMultipleAgents" , SDL_WINDOWPOS_CENTERED , 1200 - 480 - 60 , 640 , 480 , 0));
         NDebug::GDebug.ISimpleDirectMediaLayerHandleError(FRenderer = SDL_CreateRenderer(FWindow , -1 , SDL_RENDERER_ACCELERATED));
         SDL_DisplayMode LDisplayMode;
         NDebug::GDebug.ISimpleDirectMediaLayerCodeError(SDL_GetWindowDisplayMode(FWindow , &LDisplayMode));

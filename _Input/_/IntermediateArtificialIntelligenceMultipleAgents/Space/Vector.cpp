@@ -6,64 +6,40 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NVector
 {
     SVector::SVector()
     {
-        FX = 0.0;
-        FXMinimum = std::numeric_limits<double>::min();
+        FXMinimum = -std::numeric_limits<double>::min();
         FXMaximum = std::numeric_limits<double>::max();
-        FY = 0.0;
-        FYMinimum = std::numeric_limits<double>::min();
-        FYMaximum = std::numeric_limits<double>::max();
-    }
-
-    SVector* SVector::IReset()
-    {
         FX = 0.0;
+        FYMinimum = -std::numeric_limits<double>::min();
+        FYMaximum = std::numeric_limits<double>::max();
         FY = 0.0;
-        return(this);
     }
 
-    SVector* SVector::IAssign(SVector* const& AVector)
+    void SVector::IAssign(double const& AX , double const& AY)
     {
-        FX = std::clamp(AVector->FX , FXMinimum , FXMaximum);
-        FY = std::clamp(AVector->FY , FYMinimum , FYMaximum);
-        return(this);
+        FX = std::clamp(AX , FXMinimum , FXMaximum);
+        FY = std::clamp(AY , FYMinimum , FYMaximum);
     }
 
-    std::shared_ptr<SVector> SVector::IAdd(SVector* const& AVector)
+    void SVector::INormalize()
     {
-        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
-        LVector->FX = FX + AVector->FX;
-        LVector->FY = FY + AVector->FY;
-        return(LVector);
-    }
-
-    std::shared_ptr<SVector> SVector::ISubtract(SVector* const& AVector)
-    {
-        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
-        LVector->FX = FX - AVector->FX;
-        LVector->FY = FY - AVector->FY;
-        return(LVector);
-    }
-
-    std::shared_ptr<SVector> SVector::IMultiply(SVector* const& AVector)
-    {
-        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
-        LVector->FX = FX * AVector->FX;
-        LVector->FY = FY * AVector->FY;
-        return(LVector);
-    }
-
-    std::shared_ptr<SVector> SVector::IDivide(SVector* const& AVector)
-    {
-        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
-        if(AVector->FX)
+        if(IValidate())
         {
-            LVector->FX = FX / AVector->FX;
+            FX /= IMeasure();
+            FY /= IMeasure();
         }
-        if(AVector->FY)
+    }
+
+    void SVector::IGenerate(bool const& ANormalization)
+    {
+        std::random_device LGenerator;
+        std::uniform_real_distribution<double> LXDistributor{FXMinimum , FXMaximum};
+        std::uniform_real_distribution<double> LYDistributor{FYMinimum , FYMaximum};
+        FX = LXDistributor(LGenerator);
+        FY = LYDistributor(LGenerator);
+        if(ANormalization)
         {
-            LVector->FY = FY / AVector->FY;
+            INormalize();
         }
-        return(LVector);
     }
 
     bool SVector::IValidate()
@@ -71,29 +47,57 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NVector
         return(FX || FY);
     }
 
+    bool SVector::IClamp(double const& AMinimum , double const& AMaximum)
+    {
+        return(IMeasure() == std::clamp(IMeasure() , AMinimum , AMaximum));
+    }
+
     double SVector::IMeasure()
     {
         return(std::sqrt(FX * FX + FY * FY));
     }
 
-    SVector* SVector::INormalize()
+    double SVector::IMeasure(double const& AX , double const& AY)
     {
-        if(IValidate())
-        {
-            FX /= IMeasure();
-            FY /= IMeasure();
-        }
-        return(this);
+        return(ISubtract(AX , AY)->IMeasure());
     }
 
-    SVector* SVector::IGenerate(double const& AMinimum , double const& AMaximum)
+    std::shared_ptr<SVector> SVector::IAdd(double const& AX , double const& AY)
     {
-        std::random_device LGenerator;
-        std::uniform_real_distribution<double> LDirectionDistributor{AMinimum , AMaximum};
-        FX = LDirectionDistributor(LGenerator);
-        FY = LDirectionDistributor(LGenerator);
-        INormalize();
-        return(this);
+        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
+        LVector->FX = FX + AX;
+        LVector->FY = FY + AY;
+        return(LVector);
+    }
+
+    std::shared_ptr<SVector> SVector::ISubtract(double const& AX , double const& AY)
+    {
+        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
+        LVector->FX = FX - AX;
+        LVector->FY = FY - AY;
+        return(LVector);
+    }
+
+    std::shared_ptr<SVector> SVector::IMultiply(double const& AX , double const& AY)
+    {
+        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
+        LVector->FX = FX * AX;
+        LVector->FY = FY * AY;
+        return(LVector);
+    }
+
+    std::shared_ptr<SVector> SVector::IDivide(double const& AX , double const& AY)
+    {
+        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
+        if(AX)
+        {
+            LVector->FX = FX / AX;
+        }
+        if(AY)
+        {
+            LVector->FY = FY / AY;
+        }
+        return(LVector);
     }
 
     SVector::~SVector()

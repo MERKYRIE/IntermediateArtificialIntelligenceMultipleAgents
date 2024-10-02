@@ -1,31 +1,21 @@
 #pragma once
 
 namespace NIntermediateArtificialIntelligenceMultipleAgents::NKeyboard
-{
+{    
+    namespace NKey
+    {
+        struct SKey;
+    }
+
     inline struct SKeyboard
     {
-        std::int64_t FKeys;
-        std::vector<bool> FAreKeysHeld;
-        std::vector<bool> FAreKeysPressed;
-        std::vector<bool> FAreKeysReleased;
+        std::unordered_map<std::string , std::shared_ptr<NKey::SKey>> FKeys;
+        std::unordered_map<SDL_Scancode , std::string> FAdaptors;
 
         SKeyboard();
         void IPreupdate();
 
-        std::int64_t const& IKeys();
-        std::vector<bool> const& IAreKeysHeld();
-        std::vector<bool> const& IAreKeysPressed();
-        std::vector<bool> const& IAreKeysReleased();
-
-        void IKeys(std::int64_t const& AValue);
-        void IAreKeysHeld(std::vector<bool> const& AValue);
-        void IAreKeysPressed(std::vector<bool> const& AValue);
-        void IAreKeysReleased(std::vector<bool> const& AValue);
-
-        bool IIsKeyHeld(std::int64_t AKey);
-        bool IIsKeyPressed(std::int64_t AKey);
-        bool IIsKeyReleased(std::int64_t AKey);
-        void IPostupdate(SDL_Event& AEvent);
+        void IPostupdate(SDL_Event const& AEvent);
         ~SKeyboard();
     }
     GKeyboard;

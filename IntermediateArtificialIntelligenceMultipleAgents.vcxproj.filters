@@ -29,6 +29,9 @@
     <ClInclude Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Space\Vector.hpp">
       <Filter>IntermediateArtificialIntelligenceMultipleAgents\Space</Filter>
     </ClInclude>
+    <ClInclude Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Keyboard\Key.hpp">
+      <Filter>IntermediateArtificialIntelligenceMultipleAgents\Keyboard</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents.cpp" />
@@ -59,6 +62,9 @@
     <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Space\Vector.cpp">
       <Filter>IntermediateArtificialIntelligenceMultipleAgents\Space</Filter>
     </ClCompile>
+    <ClCompile Include="_Input\_\IntermediateArtificialIntelligenceMultipleAgents\Keyboard\Key.cpp">
+      <Filter>IntermediateArtificialIntelligenceMultipleAgents\Keyboard</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IntermediateArtificialIntelligenceMultipleAgents">
@@ -69,6 +75,9 @@
     </Filter>
     <Filter Include="IntermediateArtificialIntelligenceMultipleAgents\Video">
       <UniqueIdentifier>{98f1907e-207b-4f10-9e35-54573adf1f6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IntermediateArtificialIntelligenceMultipleAgents\Keyboard">
+      <UniqueIdentifier>{bcc7dd42-c47e-4ddc-a24f-04c709cb3178}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

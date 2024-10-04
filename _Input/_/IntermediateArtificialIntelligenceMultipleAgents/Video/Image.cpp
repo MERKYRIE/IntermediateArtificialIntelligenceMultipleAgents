@@ -68,9 +68,9 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NVideo::NImage
         return(std::max(LWidth , LHeight));
     }
 
-    SImage* SImage::IDraw(const SDL_Rect& ASource , const SDL_Rect& ADestination)
+    SImage* SImage::IDraw(const SDL_Rect& ASource , const SDL_Rect& ADestination , const double& ARotation)
     {
-        SDL_RenderCopy(GVideo.IRenderer() , FHandle , &ASource , &ADestination);
+        SDL_RenderCopyEx(GVideo.IRenderer() , FHandle , &ASource , &ADestination , ARotation , nullptr , SDL_FLIP_NONE);
         return(this);
     }
 

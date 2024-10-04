@@ -7,14 +7,17 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NVideo::NSprite
         NImage::SImage* FImage;
         SDL_Rect FSource;
         SDL_Rect FDestination;
+        double FRotation;
 
         SSprite();
         NImage::SImage* const& IImage();
         SDL_Rect const& ISource();
         SDL_Rect const& IDestination();
+        double const& IRotation();
         SSprite* IImage(NImage::SImage* const& AImage);
         SSprite* ISource(SDL_Rect const& AValue);
         SSprite* IDestination(SDL_Rect const& AValue);
+        SSprite* IRotation(double const& AValue);
         SSprite* ILoad(NImage::SImage* AImage);
         SSprite* IUnload();
         std::int32_t IAccessSourceX();

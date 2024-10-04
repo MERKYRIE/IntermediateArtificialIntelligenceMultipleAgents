@@ -62,6 +62,12 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NVector
         return(ISubtract(AX , AY)->IMeasure());
     }
 
+    double SVector::IConvert()
+    {
+        INormalize();
+        return(std::atan2(FY , FX) * 180.0 / std::numbers::pi);
+    }
+
     std::shared_ptr<SVector> SVector::IAdd(double const& AX , double const& AY)
     {
         std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};

@@ -20,6 +20,7 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NVector
         bool IClamp(double const& AMinimum , double const& AMaximum);
         double IMeasure();
         double IMeasure(double const& AX , double const& AY);
+        double IConvert();
         std::shared_ptr<SVector> IAdd(double const& AX , double const& AY);
         std::shared_ptr<SVector> ISubtract(double const& AX , double const& AY);
         std::shared_ptr<SVector> IMultiply(double const& AX , double const& AY);

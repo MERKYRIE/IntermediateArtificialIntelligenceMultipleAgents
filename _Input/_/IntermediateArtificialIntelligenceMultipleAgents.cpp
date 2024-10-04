@@ -15,7 +15,7 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents
 
     void SIntermediateArtificialIntelligenceMultipleAgents::IUupdate()
     {
-        while(NKeyboard::GKeyboard.FKeys["Escape"]->FState == "Down")
+        while(NKeyboard::GKeyboard.FKeys["Escape"]->FState == "Up")
         {
             NDebug::GDebug.IPreupdate();
             NKeyboard::GKeyboard.IPreupdate();

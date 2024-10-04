@@ -17,7 +17,7 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NVideo::NImage
         std::int32_t IAccessHeight();
         std::int32_t IAccessMinimum();
         std::int32_t IAccessMaximum();
-        SImage* IDraw(const SDL_Rect& ASource , const SDL_Rect& ADestination);
+        SImage* IDraw(const SDL_Rect& ASource , const SDL_Rect& ADestination , const double& ARotation);
         ~SImage();
     };
 }

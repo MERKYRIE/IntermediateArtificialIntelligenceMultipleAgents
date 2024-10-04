@@ -8,11 +8,7 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NKeyboard
     {
         for(auto const&[LKey , LValue] : std::initializer_list<std::pair<decltype(FAdaptors)::key_type , decltype(FAdaptors)::mapped_type>>
         {
-            {SDL_SCANCODE_A , "A"}
-            ,
-            {SDL_SCANCODE_B , "B"}
-            ,
-            {SDL_SCANCODE_C , "C"}
+            {SDL_SCANCODE_ESCAPE , "Escape"}
         })
         {
             FKeys[LValue] = std::make_shared<NKey::SKey>();

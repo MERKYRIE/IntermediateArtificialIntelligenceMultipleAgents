@@ -10,6 +10,7 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NEntity
         double FSeparation;
         double FAlignment;
         double FCohesion;
+        double FSteer;
         std::shared_ptr<NVector::SVector> FPosition;
         std::shared_ptr<NVector::SVector> FDirection;
 

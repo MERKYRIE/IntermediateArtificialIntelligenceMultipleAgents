@@ -10,6 +10,7 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NVideo::NSprite
         FImage = nullptr;
         FSource = {};
         FDestination = {};
+        FRotation = 0.0;
     }
 
     NImage::SImage* const& SSprite::IImage()
@@ -25,6 +26,11 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NVideo::NSprite
     SDL_Rect const& SSprite::IDestination()
     {
         return(FDestination);
+    }
+
+    double const& SSprite::IRotation()
+    {
+        return(FRotation);
     }
 
     SSprite* SSprite::IImage(NImage::SImage* const& AImage)
@@ -45,11 +51,18 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NVideo::NSprite
         return(this);
     }
 
+    SSprite* SSprite::IRotation(double const& AValue)
+    {
+        FRotation = AValue;
+        return(this);
+    }
+
     SSprite* SSprite::ILoad(NImage::SImage* AImage)
     {
         FImage = AImage;
         FSource.w = FImage->IAccessWidth();
         FSource.h = FImage->IAccessHeight();
+        FRotation = 0.0;
         return(this);
     }
 
@@ -462,7 +475,7 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NVideo::NSprite
 
     SSprite* SSprite::IDraw()
     {
-        FImage->IDraw(FSource , FDestination);
+        FImage->IDraw(FSource , {FDestination.x + FDestination.w / 2 , FDestination.y + FDestination.h / 2 , FDestination.w , FDestination.h} , FRotation);
         return(this);
     }
 }

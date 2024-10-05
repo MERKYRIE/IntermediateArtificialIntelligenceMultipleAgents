@@ -8,11 +8,11 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NEntity
         double FTimer;
         double FScale;
         double FSeparation;
-        double FAlignment;
         double FCohesion;
         double FSteer;
         std::shared_ptr<NVector::SVector> FPosition;
         std::shared_ptr<NVector::SVector> FDirection;
+        std::shared_ptr<NVector::SVector> FLastDirection;
 
         SEntity();
         SEntity* IPreupdate();

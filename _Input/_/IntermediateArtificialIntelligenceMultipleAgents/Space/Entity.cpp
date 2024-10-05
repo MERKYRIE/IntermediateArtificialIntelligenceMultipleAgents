@@ -14,23 +14,17 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NEntity
         FTimer = 0.0;
         FScale = 1.0 / 64.0;
         FSeparation = 1.0 / 16.0;
-        FAlignment = 1.0 / 4.0;
-        FCohesion = 1.0 / 1.0;
+        FCohesion = 1.0 / 4.0;
         FSteer = 30.0;
 
         FPosition = std::make_shared<NVector::SVector>();
-        FPosition->FXMinimum = FScale / 2.0;
-        FPosition->FXMaximum = NVideo::GVideo.IConvertFromPixelToSquare(NVideo::GVideo.IWidth()) - FScale / 2.0;
-        FPosition->FYMinimum = FScale / 2.0;
-        FPosition->FYMaximum = NVideo::GVideo.IConvertFromPixelToSquare(NVideo::GVideo.IHeight()) - FScale / 2.0;
-        FPosition->IGenerate();
+        FPosition->IAssign(FPosition->IGenerate(FScale / 2.0 , NVideo::GVideo.IConvertFromPixelToSquare(NVideo::GVideo.IWidth()) - FScale / 2.0 , FScale / 2.0 , NVideo::GVideo.IConvertFromPixelToSquare(NVideo::GVideo.IHeight()) - FScale / 2.0));
 
         FDirection = std::make_shared<NVector::SVector>();
-        FDirection->FXMinimum = -1.0;
-        FDirection->FXMaximum = +1.0;
-        FDirection->FYMinimum = -1.0;
-        FDirection->FYMaximum = +1.0;
-        FDirection->IGenerate(true);
+        FDirection->IAssign(FDirection->IGenerate(-1.0 , +1.0 , -1.0 , +1.0)->INormalize());
+
+        FLastDirection = std::make_shared<NVector::SVector>();
+        FLastDirection->IAssign(FDirection);
     }
 
     SEntity* SEntity::IPreupdate()
@@ -40,58 +34,50 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NEntity
         {
             if(GSpace.FArray[LEntity].get() != this)
             {
-                if(GSpace.FArray[LEntity]->FPosition->IMeasure(FPosition->FX , FPosition->FY) < FSeparation)
+                if(GSpace.FArray[LEntity]->FPosition->ISubtract(FPosition->FX)->IMeasure() < FSeparation)
                 {
-                    LDirection
-                    =
-                    LDirection->ISubtract
-                    (
-                        GSpace.FArray[LEntity]->FPosition->ISubtract(FPosition->FX , FPosition->FY)->FX , GSpace.FArray[LEntity]->FPosition->ISubtract(FPosition->FX , FPosition->FY)->FY
-                    );
+                    LDirection->IAssign(LDirection->ISubtract(GSpace.FArray[LEntity]->FPosition->ISubtract(FPosition)));
                 }
             }
         }
-        if(!LDirection->IValidate())
+        for(std::int64_t LEntity{0} ; LEntity < GSpace.FNumber ; LEntity++)
         {
-            for(std::int64_t LEntity{0} ; LEntity < GSpace.FNumber ; LEntity++)
+            if(GSpace.FArray[LEntity].get() != this)
             {
-                if(GSpace.FArray[LEntity].get() != this)
+                if(GSpace.FArray[LEntity]->FPosition->ISubtract(FPosition)->IClamp(FSeparation , FCohesion))
                 {
-                    if(GSpace.FArray[LEntity]->FPosition->ISubtract(FPosition->FX , FPosition->FY)->IClamp(FSeparation , FAlignment))
-                    {
-                        LDirection = LDirection->IAdd(GSpace.FArray[LEntity]->FDirection->FX , GSpace.FArray[LEntity]->FDirection->FY);
-                    }
+                    LDirection->IAssign(LDirection->IAdd(GSpace.FArray[LEntity]->FDirection));
                 }
             }
-            for(std::int64_t LEntity{0} ; LEntity < GSpace.FNumber ; LEntity++)
-            {
-                if(GSpace.FArray[LEntity].get() != this)
-                {
-                    if(GSpace.FArray[LEntity]->FPosition->ISubtract(FPosition->FX , FPosition->FY)->IClamp(FAlignment , FCohesion))
-                    {
-                        LDirection
-                        =
-                        LDirection->IAdd
-                        (
-                            GSpace.FArray[LEntity]->FPosition->ISubtract(FPosition->FX , FPosition->FY)->FX , GSpace.FArray[LEntity]->FPosition->ISubtract(FPosition->FX , FPosition->FY)->FY
-                        );
-                    }
-                }
-            }
-            if(NTime::GTime.ITimepointAbsolute() / 1'000.0 - FTimer >= 1.0)
-            {
-                FDirection->IGenerate(true);
-                FTimer = NTime::GTime.ITimepointAbsolute() / 1'000.0;
-            }
-            LDirection = LDirection->IAdd(FDirection->FX , FDirection->FY);
         }
-        if(std::abs(std::clamp(LDirection->IConvert() - FSprite->IRotation() , -FSteer , +FSteer)) * NTime::GTime.ITimepointRelative() / 1'000 < FSteer)
+        for(std::int64_t LEntity{0} ; LEntity < GSpace.FNumber ; LEntity++)
         {
-            FPosition->IAssign(FPosition->FX + LDirection->FX * NTime::GTime.ITimepointRelative() / 1'000.0 , FPosition->FY + LDirection->FY * NTime::GTime.ITimepointRelative() / 1'000.0);
+            if(GSpace.FArray[LEntity].get() != this)
+            {
+                if(GSpace.FArray[LEntity]->FPosition->ISubtract(FPosition->FX)->IMeasure() > FCohesion)
+                {
+                    LDirection->IAssign(LDirection->IAdd(GSpace.FArray[LEntity]->FPosition->ISubtract(FPosition)));
+                }
+            }
         }
-        FSprite->IAccessDestinationXSquareAbsolute(FPosition->FX)->IAccessDestinationYSquareAbsolute(FPosition->FY)
-        ->IAccessDestinationWidthSquareAbsolute(FScale)->IAccessDestinationHeightSquareAbsolute(FScale)
-        ->IRotation(FSprite->IRotation() + std::clamp(LDirection->IConvert() - FSprite->IRotation() , -FSteer , +FSteer) * NTime::GTime.ITimepointRelative() / 1'000)->IDraw();
+        if(NTime::GTime.ITimepointAbsolute() / 1'000.0 - FTimer >= 1.0)
+        {
+            FLastDirection->IAssign(FDirection);
+            FDirection->IAssign(FDirection->IGenerate(-1.0 , +1.0 , -1.0 , +1.0)->INormalize());
+            FTimer = NTime::GTime.ITimepointAbsolute() / 1'000.0;
+        }
+        else
+        {
+            FDirection = FLastDirection;
+        }
+        FDirection->IAssign(FDirection->IAdd(LDirection));
+        if(std::abs(std::clamp(FDirection->IConvert() - FSprite->IRotation() , -FSteer , +FSteer)) * NTime::GTime.ITimepointRelative() / 1'000 < FSteer)
+        {
+            FPosition->IAssign(FPosition->IAdd(FDirection->IMultiply(NTime::GTime.ITimepointRelative() / 1'000.0 / 60.0 / 60.0 / 1.0)));
+            FPosition->IShrink(FScale / 2.0 , NVideo::GVideo.IConvertFromPixelToSquare(NVideo::GVideo.IWidth()) - FScale / 2.0 , FScale / 2.0 , NVideo::GVideo.IConvertFromPixelToSquare(NVideo::GVideo.IHeight()) - FScale / 2.0);
+        }
+        FSprite->IAccessDestinationXSquareAbsolute(FPosition->FX)->IAccessDestinationYSquareAbsolute(FPosition->FY)->IAccessDestinationWidthSquareAbsolute(FScale)->IAccessDestinationHeightSquareAbsolute(FScale)
+        ->IRotation(FSprite->IRotation() + std::clamp(FDirection->IConvert() - FSprite->IRotation() , -FSteer , +FSteer) * NTime::GTime.ITimepointRelative() / 1'000)->IDraw();
         return(this);
     }
 

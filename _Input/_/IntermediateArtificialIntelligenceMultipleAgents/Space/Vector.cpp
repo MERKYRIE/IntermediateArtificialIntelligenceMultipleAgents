@@ -6,40 +6,14 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NVector
 {
     SVector::SVector()
     {
-        FXMinimum = -std::numeric_limits<double>::min();
-        FXMaximum = std::numeric_limits<double>::max();
         FX = 0.0;
-        FYMinimum = -std::numeric_limits<double>::min();
-        FYMaximum = std::numeric_limits<double>::max();
         FY = 0.0;
     }
 
-    void SVector::IAssign(double const& AX , double const& AY)
+    void SVector::IAssign(std::shared_ptr<SVector> const& AVector)
     {
-        FX = std::clamp(AX , FXMinimum , FXMaximum);
-        FY = std::clamp(AY , FYMinimum , FYMaximum);
-    }
-
-    void SVector::INormalize()
-    {
-        if(IValidate())
-        {
-            FX /= IMeasure();
-            FY /= IMeasure();
-        }
-    }
-
-    void SVector::IGenerate(bool const& ANormalization)
-    {
-        std::random_device LGenerator;
-        std::uniform_real_distribution<double> LXDistributor{FXMinimum , FXMaximum};
-        std::uniform_real_distribution<double> LYDistributor{FYMinimum , FYMaximum};
-        FX = LXDistributor(LGenerator);
-        FY = LYDistributor(LGenerator);
-        if(ANormalization)
-        {
-            INormalize();
-        }
+        FX = AVector->FX;
+        FY = AVector->FY;
     }
 
     bool SVector::IValidate()
@@ -49,7 +23,7 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NVector
 
     bool SVector::IClamp(double const& AMinimum , double const& AMaximum)
     {
-        return(IMeasure() == std::clamp(IMeasure() , AMinimum , AMaximum));
+        return(std::sqrt(FX * FX + FY * FY) == std::clamp(std::sqrt(FX * FX + FY * FY) , AMinimum , AMaximum));
     }
 
     double SVector::IMeasure()
@@ -57,51 +31,136 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NVector
         return(std::sqrt(FX * FX + FY * FY));
     }
 
-    double SVector::IMeasure(double const& AX , double const& AY)
-    {
-        return(ISubtract(AX , AY)->IMeasure());
-    }
-
     double SVector::IConvert()
     {
-        INormalize();
-        return(std::atan2(FY , FX) * 180.0 / std::numbers::pi);
-    }
-
-    std::shared_ptr<SVector> SVector::IAdd(double const& AX , double const& AY)
-    {
         std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
-        LVector->FX = FX + AX;
-        LVector->FY = FY + AY;
-        return(LVector);
-    }
-
-    std::shared_ptr<SVector> SVector::ISubtract(double const& AX , double const& AY)
-    {
-        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
-        LVector->FX = FX - AX;
-        LVector->FY = FY - AY;
-        return(LVector);
-    }
-
-    std::shared_ptr<SVector> SVector::IMultiply(double const& AX , double const& AY)
-    {
-        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
-        LVector->FX = FX * AX;
-        LVector->FY = FY * AY;
-        return(LVector);
-    }
-
-    std::shared_ptr<SVector> SVector::IDivide(double const& AX , double const& AY)
-    {
-        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
-        if(AX)
+        if(LVector->FX || LVector->FY)
         {
-            LVector->FX = FX / AX;
+            return(std::atan2(FY/ std::sqrt(LVector->FX * LVector->FX + LVector->FY * LVector->FY) , FX/ std::sqrt(LVector->FX * LVector->FX + LVector->FY * LVector->FY)) * 180.0 / std::numbers::pi);
         }
-        if(AY)
+        else
         {
-            LVector->FY = FY / AY;
+            return(0.0);
+        }
+    }
+
+    std::shared_ptr<SVector> SVector::INormalize()
+    {
+        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
+        if(FX || FY)
+        {
+            LVector->FX = FX / std::sqrt(FX * FX + FY * FY);
+            LVector->FY = FY / std::sqrt(FX * FX + FY * FY);
+        }
+        else
+        {
+            LVector->FX = 0.0;
+            LVector->FY = 0.0;
+        }
+        return(LVector);
+    }
+
+    std::shared_ptr<SVector> SVector::IShrink(double const& AMinimumX , double const& AMaximumX , double const& AMinimumY , double const& AMaximumY)
+    {
+        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
+        LVector->FX = std::clamp(FX , AMinimumX , AMaximumX);
+        LVector->FY = std::clamp(FY , AMinimumY , AMaximumY);
+        return(LVector);
+    }
+
+    std::shared_ptr<SVector> SVector::IGenerate(double const& AMinimumX , double const& AMaximumX , double const& AMinimumY , double const& AMaximumY)
+    {
+        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
+        std::random_device LGenerator;
+        std::uniform_real_distribution<double> LXDistributor{AMinimumX , AMaximumX};
+        std::uniform_real_distribution<double> LYDistributor{AMinimumY , AMaximumY};
+        LVector->FX = LXDistributor(LGenerator);
+        LVector->FY = LYDistributor(LGenerator);
+        return(LVector);
+    }
+
+    std::shared_ptr<SVector> SVector::IAdd(double const& AValue)
+    {
+        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
+        LVector->FX = FX + AValue;
+        LVector->FY = FY + AValue;
+        return(LVector);
+    }
+
+    std::shared_ptr<SVector> SVector::ISubtract(double const& AValue)
+    {
+        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
+        LVector->FX = FX - AValue;
+        LVector->FY = FY - AValue;
+        return(LVector);
+    }
+
+    std::shared_ptr<SVector> SVector::IMultiply(double const& AValue)
+    {
+        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
+        LVector->FX = FX * AValue;
+        LVector->FY = FY * AValue;
+        return(LVector);
+    }
+
+    std::shared_ptr<SVector> SVector::IDivide(double const& AValue)
+    {
+        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
+        if(AValue)
+        {
+            LVector->FX = FX / AValue;
+            LVector->FY = FY / AValue;
+        }
+        else
+        {
+            LVector->FX = 0.0;
+            LVector->FY = 0.0;
+        }
+        return(LVector);
+    }
+
+    std::shared_ptr<SVector> SVector::IAdd(std::shared_ptr<SVector> const& AVector)
+    {
+        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
+        LVector->FX = FX + AVector->FX;
+        LVector->FY = FY + AVector->FY;
+        return(LVector);
+    }
+
+    std::shared_ptr<SVector> SVector::ISubtract(std::shared_ptr<SVector> const& AVector)
+    {
+        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
+        LVector->FX = FX - AVector->FX;
+        LVector->FY = FY - AVector->FY;
+        return(LVector);
+    }
+
+    std::shared_ptr<SVector> SVector::IMultiply(std::shared_ptr<SVector> const& AVector)
+    {
+        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
+        LVector->FX = FX * AVector->FX;
+        LVector->FY = FY * AVector->FY;
+        return(LVector);
+    }
+
+    std::shared_ptr<SVector> SVector::IDivide(std::shared_ptr<SVector> const& AVector)
+    {
+        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
+        if(AVector->FX)
+        {
+            LVector->FX = FX / AVector->FX;
+        }
+        else
+        {
+            LVector->FX = 0.0;
+        }
+        if(AVector->FY)
+        {
+            LVector->FY = FY / AVector->FY;
+        }
+        else
+        {
+            LVector->FY = 0.0;
         }
         return(LVector);
     }

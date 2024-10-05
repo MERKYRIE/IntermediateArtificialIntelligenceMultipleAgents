@@ -4,27 +4,32 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NVector
 {
     struct SVector
     {
-        double FXMinimum;
-        double FXMaximum;
         double FX;
-        double FYMinimum;
-        double FYMaximum;
         double FY;
 
         SVector();
 
-        void IAssign(double const& AX , double const& AY);
-        void INormalize();
-        void IGenerate(bool const& ANormalization = false);
+        void IAssign(std::shared_ptr<SVector> const& AVector);
+
         bool IValidate();
         bool IClamp(double const& AMinimum , double const& AMaximum);
+
         double IMeasure();
-        double IMeasure(double const& AX , double const& AY);
         double IConvert();
-        std::shared_ptr<SVector> IAdd(double const& AX , double const& AY);
-        std::shared_ptr<SVector> ISubtract(double const& AX , double const& AY);
-        std::shared_ptr<SVector> IMultiply(double const& AX , double const& AY);
-        std::shared_ptr<SVector> IDivide(double const& AX , double const& AY);
+
+        std::shared_ptr<SVector> INormalize();
+        std::shared_ptr<SVector> IGenerate(double const& AMinimumX , double const& AMaximumX , double const& AMinimumY , double const& AMaximumY);
+        std::shared_ptr<SVector> IShrink(double const& AMinimumX , double const& AMaximumX , double const& AMinimumY , double const& AMaximumY);
+
+        std::shared_ptr<SVector> IAdd(double const& AValue);
+        std::shared_ptr<SVector> ISubtract(double const& AValue);
+        std::shared_ptr<SVector> IMultiply(double const& AValue);
+        std::shared_ptr<SVector> IDivide(double const& AValue);
+
+        std::shared_ptr<SVector> IAdd(std::shared_ptr<SVector> const& AVector);
+        std::shared_ptr<SVector> ISubtract(std::shared_ptr<SVector> const& AVector);
+        std::shared_ptr<SVector> IMultiply(std::shared_ptr<SVector> const& AVector);
+        std::shared_ptr<SVector> IDivide(std::shared_ptr<SVector> const& AVector);
 
         ~SVector();
     };

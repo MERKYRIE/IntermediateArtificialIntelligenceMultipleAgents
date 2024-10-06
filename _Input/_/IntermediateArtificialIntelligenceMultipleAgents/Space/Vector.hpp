@@ -20,6 +20,7 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NVector
         std::shared_ptr<SVector> INormalize();
         std::shared_ptr<SVector> IGenerate(double const& AMinimumX , double const& AMaximumX , double const& AMinimumY , double const& AMaximumY);
         std::shared_ptr<SVector> IShrink(double const& AMinimumX , double const& AMaximumX , double const& AMinimumY , double const& AMaximumY);
+        std::shared_ptr<SVector> IInvert();
 
         std::shared_ptr<SVector> IAdd(double const& AValue);
         std::shared_ptr<SVector> ISubtract(double const& AValue);

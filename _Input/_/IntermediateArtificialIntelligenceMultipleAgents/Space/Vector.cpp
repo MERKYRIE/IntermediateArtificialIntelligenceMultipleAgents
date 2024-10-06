@@ -33,10 +33,9 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NVector
 
     double SVector::IConvert()
     {
-        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
-        if(LVector->FX || LVector->FY)
+        if(FX || FY)
         {
-            return(std::atan2(FY/ std::sqrt(LVector->FX * LVector->FX + LVector->FY * LVector->FY) , FX/ std::sqrt(LVector->FX * LVector->FX + LVector->FY * LVector->FY)) * 180.0 / std::numbers::pi);
+            return(std::atan2(FY/ std::sqrt(FX * FX + FY * FY) , FX/ std::sqrt(FX * FX + FY * FY)) * 180.0 / std::numbers::pi);
         }
         else
         {
@@ -54,8 +53,8 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NVector
         }
         else
         {
-            LVector->FX = 0.0;
-            LVector->FY = 0.0;
+            LVector->FX = FX;
+            LVector->FY = FY;
         }
         return(LVector);
     }
@@ -76,6 +75,22 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NVector
         std::uniform_real_distribution<double> LYDistributor{AMinimumY , AMaximumY};
         LVector->FX = LXDistributor(LGenerator);
         LVector->FY = LYDistributor(LGenerator);
+        return(LVector);
+    }
+
+    std::shared_ptr<SVector> SVector::IInvert()
+    {
+        std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
+        if(FX && FY)
+        {
+            LVector->FX = 1.0 / FX;
+            LVector->FY = 1.0 / FY;
+        }
+        else
+        {
+            LVector->FX = FX;
+            LVector->FY = FY;
+        }
         return(LVector);
     }
 
@@ -113,8 +128,8 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NVector
         }
         else
         {
-            LVector->FX = 0.0;
-            LVector->FY = 0.0;
+            LVector->FX = FX;
+            LVector->FY = FY;
         }
         return(LVector);
     }
@@ -146,21 +161,15 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NVector
     std::shared_ptr<SVector> SVector::IDivide(std::shared_ptr<SVector> const& AVector)
     {
         std::shared_ptr<SVector> LVector{std::make_shared<SVector>()};
-        if(AVector->FX)
+        if(AVector->FX && AVector->FY)
         {
             LVector->FX = FX / AVector->FX;
-        }
-        else
-        {
-            LVector->FX = 0.0;
-        }
-        if(AVector->FY)
-        {
             LVector->FY = FY / AVector->FY;
         }
         else
         {
-            LVector->FY = 0.0;
+            LVector->FX = FX;
+            LVector->FY = FY;
         }
         return(LVector);
     }

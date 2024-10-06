@@ -54,6 +54,14 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NVideo::NSprite
     SSprite* SSprite::IRotation(double const& AValue)
     {
         FRotation = AValue;
+        if(FRotation < -180.0)
+        {
+            FRotation += 360.0;
+        }
+        if(FRotation > +180.0)
+        {
+            FRotation -= 360.0;
+        }
         return(this);
     }
 
@@ -475,7 +483,7 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NVideo::NSprite
 
     SSprite* SSprite::IDraw()
     {
-        FImage->IDraw(FSource , {FDestination.x + FDestination.w / 2 , FDestination.y + FDestination.h / 2 , FDestination.w , FDestination.h} , FRotation);
+        FImage->IDraw(FSource , {FDestination.x - FDestination.w / 2 , FDestination.y - FDestination.h / 2 , FDestination.w , FDestination.h} , FRotation);
         return(this);
     }
 }

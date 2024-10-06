@@ -8,6 +8,7 @@ namespace NIntermediateArtificialIntelligenceMultipleAgents::NSpace::NEntity
         double FTimer;
         double FScale;
         double FSeparation;
+        double FAlignment;
         double FCohesion;
         double FSteer;
         std::shared_ptr<NVector::SVector> FPosition;
